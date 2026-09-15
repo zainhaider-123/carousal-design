@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Discover What's Possible — Carousel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<section class="who-we-serve">
+  <img class="deco deco--top-right" src="assets/deco-top-right.png" alt="" aria-hidden="true" />
+  <img class="deco deco--bottom-left" src="assets/deco-bottom-left.png" alt="" aria-hidden="true" />
+
+  <div class="section-inner">
+    <p class="eyebrow"><img src="assets/star-icon.svg" alt="" class="eyebrow__star" />Who We Serve</p>
+    <h2 class="heading">Discover What's Possible</h2>
+
+    <div class="carousel">
+      <button class="nav-btn nav-btn--prev" type="button" aria-label="Previous slide">
+        <img src="assets/arrow-icon.svg" alt="" />
+      </button>
+
+      <div class="carousel__viewport">
+        <div class="carousel__track" id="carouselTrack"></div>
+      </div>
+
+      <button class="nav-btn nav-btn--next" type="button" aria-label="Next slide">
+        <img src="assets/arrow-icon.svg" alt="" />
+      </button>
+    </div>
+
+    <div class="dots" id="dots"></div>
+
+    <a href="#" class="cta">
+      <span class="cta__label">See All Services</span>
+      <span class="cta__icon"><img src="assets/arrow-icon.svg" alt="" /></span>
+    </a>
+  </div>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>

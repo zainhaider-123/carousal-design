@@ -1,0 +1,383 @@
+:root {
+  --color-bg: #ffffff;
+  --color-text: #0b0b0b;
+  --color-gold: #d9a441;
+  --color-taupe: #7b745b;
+  --color-dot-active: #2c2c2c;
+  --color-dot-inactive: #d9d9d9;
+  --font-serif: "Fraunces", serif;
+  --font-sans: "Manrope", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  font-family: var(--font-sans);
+  color: var(--color-text);
+}
+
+.who-we-serve {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(48px, 8vw, 96px) 24px clamp(64px, 8vw, 110px);
+}
+
+.deco {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.9;
+  user-select: none;
+}
+
+.deco--top-right {
+  top: 0;
+  right: 0;
+  width: clamp(140px, 16vw, 260px);
+}
+
+.deco--bottom-left {
+  bottom: 0;
+  left: 0;
+  width: clamp(140px, 16vw, 260px);
+}
+
+.section-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  margin: 0 0 18px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
+.eyebrow__star {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+.heading {
+  margin: 0 0 clamp(40px, 6vw, 72px);
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: clamp(30px, 4.2vw, 50px);
+  line-height: 1.15;
+  color: var(--color-text);
+}
+
+/* ---------- Carousel ---------- */
+
+.carousel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel__viewport {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: hidden;
+  overflow-y: visible;
+  padding: 6px 0;
+}
+
+.carousel__track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 2.2vw, 30px);
+  width: 100%;
+}
+
+.card {
+  position: relative;
+  flex-shrink: 0;
+  border-radius: clamp(16px, 2.2vw, 30px);
+  overflow: hidden;
+  background: #eee;
+}
+
+/* While a slide transition is in flight, cards are taken out of flex flow
+   and animated individually (position/size) so each one visibly slides
+   into its new slot — one card at a time, not the group as a block. */
+.card--floating {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  z-index: 4;
+}
+
+.card--floating.card--center {
+  z-index: 5;
+}
+
+.card--side {
+  width: clamp(160px, 21vw, 396px);
+  aspect-ratio: 395.52 / 577.88;
+  opacity: 0.96;
+}
+
+.card--center {
+  width: clamp(230px, 29vw, 555px);
+  aspect-ratio: 554.97 / 720.36;
+  z-index: 2;
+}
+
+.card__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Bottom scrim: a separate gradient layer anchored to the card's bottom
+   edge (matches Figma's overlay rectangles, which only cover part of the
+   card height rather than the full image). */
+.card__overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top, #000 0%, rgba(0, 0, 0, 0) 72.824%);
+  pointer-events: none;
+}
+
+.card--side .card__overlay {
+  height: 60%;
+}
+
+.card--center .card__overlay {
+  height: 48%;
+}
+
+.card__body {
+  position: absolute;
+  left: clamp(16px, 2.4vw, 40px);
+  right: clamp(16px, 2.4vw, 40px);
+  bottom: clamp(16px, 2.6vw, 40px);
+  text-align: left;
+  color: #fff;
+}
+
+.card__title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(19px, 2.1vw, 30px);
+  line-height: 1.2;
+}
+
+.card--center .card__title {
+  margin-bottom: 10px;
+}
+
+.card__desc {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: clamp(14px, 1.32vw, 19px);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.92);
+  max-width: 42ch;
+}
+
+.expand-btn {
+  position: absolute;
+  top: clamp(12px, 1.8vw, 30px);
+  right: clamp(12px, 1.8vw, 30px);
+  width: clamp(36px, 4.2vw, 60px);
+  height: clamp(36px, 4.2vw, 60px);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(14px);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.expand-btn img {
+  width: 45%;
+  height: 45%;
+  transform: rotate(-45deg);
+}
+
+/* ---------- Nav arrows ---------- */
+
+.nav-btn {
+  flex-shrink: 0;
+  width: clamp(40px, 5vw, 60px);
+  height: clamp(40px, 5vw, 60px);
+  border-radius: 50%;
+  border: none;
+  background: var(--color-taupe);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 0 clamp(-14px, -1.4vw, -8px);
+  z-index: 3;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.nav-btn:hover {
+  background: #665f49;
+  transform: scale(1.05);
+}
+
+.nav-btn img {
+  width: 40%;
+  height: 40%;
+}
+
+.nav-btn--prev img {
+  transform: scaleX(-1);
+}
+
+/* ---------- Dots ---------- */
+
+.dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: clamp(28px, 4vw, 44px) 0 clamp(28px, 4vw, 40px);
+}
+
+.dot {
+  height: 9px;
+  border-radius: 5px;
+  background: var(--color-dot-inactive);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 9px;
+  transition: width 0.3s ease, background 0.3s ease;
+}
+
+.dot.is-active {
+  width: 36px;
+  background: var(--color-dot-active);
+}
+
+/* ---------- CTA ---------- */
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.cta__label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 17px 30px;
+  border-radius: 110px;
+  background: var(--color-gold);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 18px;
+  white-space: nowrap;
+}
+
+.cta__icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--color-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.cta__icon img {
+  width: 40%;
+  height: 40%;
+  transform: rotate(-45deg);
+}
+
+.cta:hover .cta__icon {
+  transform: rotate(45deg);
+}
+
+/* ---------- Responsive ---------- */
+
+/* Tablet: everything already scales via clamp()/vw, just tighten the
+   gutters a bit so three cards keep breathing room. */
+@media (max-width: 1023px) {
+  .section-inner {
+    max-width: 92vw;
+  }
+
+  .carousel__track {
+    gap: clamp(10px, 1.8vw, 20px);
+  }
+
+  .nav-btn {
+    margin: 0 clamp(-10px, -1vw, -6px);
+  }
+}
+
+/* Mobile: keep all three cards laid out at a real, readable size (never
+   squashed into unreadable slivers) and let the viewport's overflow clip
+   the side cards down to an edge "peek" — a normal carousel look, and it
+   keeps every card's geometry real (needed for the slide-transition math;
+   display:none would zero it out and break the animation). */
+@media (max-width: 700px) {
+  .who-we-serve {
+    padding: clamp(40px, 12vw, 64px) 16px clamp(48px, 12vw, 72px);
+  }
+
+  .deco--top-right,
+  .deco--bottom-left {
+    width: clamp(90px, 30vw, 160px);
+  }
+
+  .carousel__track {
+    gap: 14px;
+  }
+
+  .card--side {
+    width: clamp(120px, 30vw, 160px);
+  }
+
+  .card--center {
+    width: clamp(210px, 62vw, 420px);
+  }
+
+  .nav-btn {
+    margin: 0 -4px;
+  }
+
+  .cta {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
