@@ -1,0 +1,348 @@
+:root {
+  --color-bg: #ffffff;
+  --color-text: #0b0b0b;
+  --color-text-secondary: #2a2a2a;
+  --color-gold: #d9a441;
+  --color-taupe: #7b745b;
+  --color-card-bg: #f5f1ed;
+  --font-serif: "Fraunces", serif;
+  --font-sans: "Manrope", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  font-family: var(--font-sans);
+  color: var(--color-text);
+}
+
+.testimonials {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(48px, 8vw, 96px) 24px clamp(64px, 9vw, 120px);
+}
+
+.testimonials__leaf {
+  position: absolute;
+  right: -30px;
+  bottom: -20px;
+  width: clamp(150px, 20vw, 300px);
+  opacity: 0.85;
+  pointer-events: none;
+  user-select: none;
+  transform: scaleX(-1);
+}
+
+.testimonials__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+/* ---------- Header row ---------- */
+
+.testimonials__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: clamp(24px, 4vw, 40px);
+}
+
+.testimonials__title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: clamp(28px, 4vw, 50px);
+  text-transform: capitalize;
+  color: var(--color-text);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.cta__label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(13px, 1.6vw, 17px) clamp(22px, 2.6vw, 30px);
+  border-radius: 110px;
+  background: var(--color-gold);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: clamp(15px, 1.4vw, 18px);
+  white-space: nowrap;
+}
+
+.cta__icon {
+  width: clamp(46px, 5vw, 60px);
+  height: clamp(46px, 5vw, 60px);
+  border-radius: 50%;
+  background: var(--color-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.cta__icon img {
+  width: 40%;
+  height: 40%;
+  transform: rotate(-40deg);
+}
+
+.cta:hover .cta__icon {
+  transform: rotate(5deg) scale(1.06);
+}
+
+/* ---------- Stage (the curved carousel) ---------- */
+
+.stage {
+  /* Full-bleed: matches .testimonials' own fixed 24px side padding exactly
+     (rather than 100vw, which can overflow by a scrollbar's width and get
+     clipped asymmetrically) so this spans truly edge-to-edge.
+     The aspect-ratio (1920 / 861.176) is the exact ratio of the Figma
+     frame's width to its "curve zone" height (from the topmost peek circle
+     to the bottom of the lowest one) so every percentage below maps 1:1 to
+     the real design instead of an approximated band. */
+  position: relative;
+  z-index: 1;
+  width: calc(100% + 48px);
+  margin: 0 -24px;
+  aspect-ratio: 1920 / 861.176;
+  min-height: 380px;
+}
+
+.stage__curve {
+  /* Exact Figma placement of "Vector 355" (node 89:1029) converted to
+     percent-of-stage: left -268px/1920, top (209.54-63)/861.176, width
+     2559.214/1920, height 613.37/861.176 — then flipped vertically to
+     match Figma's own -scaleY(1) on that layer. */
+  position: absolute;
+  left: -13.9583%;
+  top: 17.0177%;
+  width: 133.2924%;
+  height: 71.2288%;
+  transform: scaleY(-1);
+  pointer-events: none;
+}
+
+.stage__curve svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.stage__cards {
+  position: absolute;
+  inset: 0;
+}
+
+.stage__hearts {
+  /* Spans the full stage (not just the curve band) since the hearts are
+     placed at fixed points near where the line meets each peek card,
+     independent of the curve math used for the moving cards. */
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.stage__heart {
+  position: absolute;
+  left: 0;
+  top: 0;
+  /* Below every card z-index (80-100, see renderCard in script.js) so a
+     card passing over a heart mid-transition covers it, instead of the
+     heart floating on top of the moving card. */
+  z-index: 10;
+  transform: translate(-50%, -50%);
+  width: clamp(28px, 4vw, 56px);
+  height: clamp(28px, 4vw, 56px);
+  filter: drop-shadow(0 6px 14px rgba(60, 45, 20, 0.18));
+}
+
+.t-card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+  width: calc(var(--scale, 1) * clamp(220px, 30vw, 460px));
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background-color: var(--color-card-bg);
+  background-image: var(--card-bg-image);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 30px 70px -30px rgba(70, 52, 22, 0.35);
+  will-change: left, top, width, opacity;
+}
+
+.t-card__inner {
+  width: 78%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--scale, 1) * 16px);
+}
+
+.t-card__stars {
+  width: calc(var(--scale, 1) * 150px);
+  height: auto;
+  display: block;
+}
+
+.t-card__quote {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: calc(var(--scale, 1) * 18px);
+  line-height: 1.4;
+  color: var(--color-text);
+}
+
+.t-card__name {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: calc(var(--scale, 1) * 24px);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.t-card--peek {
+  cursor: pointer;
+}
+
+/* ---------- Nav buttons ---------- */
+
+.stage__nav {
+  position: absolute;
+  left: 0;
+  top: 58%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 21%;
+  pointer-events: none;
+  z-index: 200;
+}
+
+.nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.nav-btn img {
+  width: clamp(42px, 5vw, 62px);
+  height: clamp(42px, 5vw, 62px);
+  transition: transform 0.2s ease;
+}
+
+.nav-btn span {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.nav-btn:hover img {
+  transform: scale(1.08);
+}
+
+.nav-btn--prev img {
+  transform: scaleX(-1);
+}
+
+.nav-btn--prev:hover img {
+  transform: scaleX(-1) scale(1.08);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1023px) {
+  .stage__nav {
+    padding: 0 13%;
+  }
+}
+
+@media (max-width: 760px) {
+  .testimonials__top {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .stage {
+    aspect-ratio: auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(20px, 5vw, 32px);
+  }
+
+  .stage__curve,
+  .stage__hearts {
+    display: none;
+  }
+
+  .stage__cards {
+    position: static;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .t-card {
+    display: none;
+  }
+
+  .t-card--center {
+    display: flex !important;
+    position: static !important;
+    transform: none !important;
+    opacity: 1 !important;
+    width: min(84vw, 360px) !important;
+    margin: 0 auto;
+  }
+
+  .stage__nav {
+    position: static;
+    padding: 0;
+    justify-content: center;
+    gap: clamp(36px, 12vw, 64px);
+  }
+
+  .testimonials__leaf {
+    width: clamp(110px, 34vw, 180px);
+  }
+}

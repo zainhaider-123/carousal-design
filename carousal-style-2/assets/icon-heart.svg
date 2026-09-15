@@ -1,0 +1,13 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="60.6667" height="60.6667" viewBox="0 0 60.6667 60.6667" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 1577709047">
+<foreignObject x="-34" y="-34" width="128.667" height="128.667"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(17px);clip-path:url(#bgblur_0_0_15_clip_path);height:100%;width:100%"></div></foreignObject><circle id="Ellipse 3163" data-figma-bg-blur-radius="34" cx="30.3334" cy="30.3334" r="29.8334" fill="white" fill-opacity="0.2" stroke="url(#paint0_linear_0_15)"/>
+<path id="Vector" d="M23.7373 20.9355C25.2243 20.4636 26.5319 20.7696 27.5986 21.3389C28.6756 21.9136 29.4912 22.751 29.9463 23.2969L30.3369 23.7656L30.7197 23.291C31.1557 22.7499 31.9621 21.9132 33.0381 21.3389C34.0371 20.8057 35.2562 20.5029 36.6455 20.8574L36.9258 20.9375C39.2714 21.6955 40.9437 23.7521 41.2188 26.1367V26.1377C41.5473 29.0535 40.0719 33.986 30.375 39.9443C30.369 39.9464 30.3632 39.9485 30.3584 39.9502C30.3407 39.9564 30.3305 39.9596 30.3232 39.9619C30.3209 39.9614 30.3183 39.9607 30.3154 39.96C30.3102 39.9586 30.3052 39.9568 30.3008 39.9551C20.6007 34.0307 19.1435 29.0951 19.4414 26.1387C19.716 23.7226 21.3878 21.6936 23.7373 20.9355Z" fill="#D9A441" stroke="#D9A441"/>
+</g>
+<defs>
+<clipPath id="bgblur_0_0_15_clip_path" transform="translate(34 34)"><circle cx="30.3334" cy="30.3334" r="29.8334"/>
+</clipPath><linearGradient id="paint0_linear_0_15" x1="30.3334" y1="0" x2="30.3334" y2="60.6667" gradientUnits="userSpaceOnUse">
+<stop stop-color="#5E4F8D"/>
+<stop offset="1" stop-color="#5E4F8D" stop-opacity="0.06"/>
+</linearGradient>
+</defs>
+</svg>

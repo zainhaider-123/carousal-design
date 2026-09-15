@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>What People Are Saying — Testimonials Carousel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<section class="testimonials">
+  <img class="testimonials__leaf" src="assets/deco-leaf.png" alt="" aria-hidden="true" />
+
+  <div class="testimonials__inner">
+    <div class="testimonials__top">
+      <h2 class="testimonials__title">What People Are Saying</h2>
+      <a href="#" class="cta">
+        <span class="cta__label">Book Appointment</span>
+        <span class="cta__icon"><img src="assets/icon-arrow-white.svg" alt="" /></span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Deliberately outside .testimonials__inner (which caps out at 1320px)
+       so this bleeds edge-to-edge with the browser window, matching the
+       full-bleed frame in the Figma design. -->
+  <div class="stage" id="stage">
+    <!-- Exact Figma "Vector 355" path/viewBox/flip (node 89:1029), scaled by
+         the precise ratio between its Figma frame position and this stage's
+         own box, so the curve renders with its real, undistorted shape. -->
+    <div class="stage__curve">
+      <svg viewBox="0 0 2559.9 614.371" aria-hidden="true">
+        <defs>
+          <linearGradient id="curveGradient" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#7B745B" stop-opacity="0" />
+            <stop offset="0.35" stop-color="#7B745B" stop-opacity="0.7" />
+            <stop offset="0.65" stop-color="#7B745B" stop-opacity="0.7" />
+            <stop offset="1" stop-color="#7B745B" stop-opacity="0" />
+          </linearGradient>
+        </defs>
+        <path id="curvePath" d="M0.447099 436.398C85.3134 266.882 369.45 -55.9184 827.067 9.00247C1399.09 90.1536 1438.77 1020.68 2559.66 403.937" fill="none" stroke="url(#curveGradient)" stroke-width="1.5" />
+      </svg>
+    </div>
+
+    <div class="stage__cards" id="cards"></div>
+    <div class="stage__hearts" id="hearts"></div>
+
+    <div class="stage__nav">
+      <button class="nav-btn nav-btn--prev" type="button" aria-label="Previous testimonial">
+        <img src="assets/icon-nav-prev.svg" alt="" />
+        <span>Prev</span>
+      </button>
+      <button class="nav-btn nav-btn--next" type="button" aria-label="Next testimonial">
+        <img src="assets/icon-nav-next.svg" alt="" />
+        <span>Next</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonial data lives in the markup so editing content doesn't require touching JS. -->
+<ul class="testimonials__data" id="testimonialsData" hidden>
+  <li>
+    <p>Anna is a wonderful person and has seriously helped me work through a very difficult time in my life. I have seen her for over a year now and cannot thank her enough.</p>
+    <span>N.O</span>
+  </li>
+  <li>
+    <p>Working with Anna gave me tools I didn't know I needed. I finally feel like I can breathe again.</p>
+    <span>R.K</span>
+  </li>
+  <li>
+    <p>I came in skeptical and left every session feeling lighter. Anna truly listens.</p>
+    <span>J.M</span>
+  </li>
+  <li>
+    <p>Anna created a space where I felt safe enough to be honest for the first time in years.</p>
+    <span>L.T</span>
+  </li>
+  <li>
+    <p>Patient, warm, and incredibly perceptive — I recommend her to everyone I know.</p>
+    <span>S.B</span>
+  </li>
+</ul>
+
+<script src="script.js"></script>
+</body>
+</html>

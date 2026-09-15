@@ -33,6 +33,23 @@
       </button>
     </div>
 
+    <!-- Slide content lives here in the markup; script.js reads this list
+         to build the carousel instead of hardcoding it in JS. -->
+    <ul class="carousel__data" id="carouselData" hidden>
+      <li data-image="assets/card-left.jpg">
+        <h3>Relationship Trauma</h3>
+        <p></p>
+      </li>
+      <li data-image="assets/card-center.jpg" data-active>
+        <h3>Trauma and PTSD</h3>
+        <p>For survivors of abuse, violence, neglect, coercion, exploitation, and other overwhelming experiences.</p>
+      </li>
+      <li data-image="assets/card-right.jpg">
+        <h3>Anxiety and Panic Disorders</h3>
+        <p></p>
+      </li>
+    </ul>
+
     <div class="dots" id="dots"></div>
 
     <a href="#" class="cta">

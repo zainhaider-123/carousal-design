@@ -1,23 +1,15 @@
-const slides = [
-  {
-    title: "Relationship Trauma",
-    description: "",
-    image: "assets/card-left.jpg",
-  },
-  {
-    title: "Trauma and PTSD",
-    description:
-      "For survivors of abuse, violence, neglect, coercion, exploitation, and other overwhelming experiences.",
-    image: "assets/card-center.jpg",
-  },
-  {
-    title: "Anxiety and Panic Disorders",
-    description: "",
-    image: "assets/card-right.jpg",
-  },
-];
+// Slide content lives in the markup (#carouselData in index.html) rather
+// than here, so editing the carousel's text/images doesn't require
+// touching JS.
+const slideEls = Array.from(document.querySelectorAll("#carouselData > li"));
+const slides = slideEls.map((li) => ({
+  title: li.querySelector("h3")?.textContent.trim() || "",
+  description: li.querySelector("p")?.textContent.trim() || "",
+  image: li.dataset.image || "",
+}));
 
-let activeIndex = 1;
+const markedActive = slideEls.findIndex((li) => li.hasAttribute("data-active"));
+let activeIndex = markedActive !== -1 ? markedActive : Math.floor(slides.length / 2);
 let isAnimating = false;
 const TRANSITION_MS = 500;
 const EASING = "cubic-bezier(0.65, 0, 0.35, 1)";
