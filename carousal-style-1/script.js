@@ -6,6 +6,7 @@ const slides = slideEls.map((li) => ({
   title: li.querySelector("h3")?.textContent.trim() || "",
   description: li.querySelector("p")?.textContent.trim() || "",
   image: li.dataset.image || "",
+  expandBtn: li.querySelector(".expand-btn"),
 }));
 
 const markedActive = slideEls.findIndex((li) => li.hasAttribute("data-active"));
@@ -39,13 +40,8 @@ function buildCard(slide, role) {
   overlay.className = "card__overlay";
   card.appendChild(overlay);
 
-  if (role === "center") {
-    const expandBtn = document.createElement("button");
-    expandBtn.className = "expand-btn";
-    expandBtn.type = "button";
-    expandBtn.setAttribute("aria-label", "Expand");
-    expandBtn.innerHTML = '<img src="assets/arrow-icon.svg" alt="" />';
-    card.appendChild(expandBtn);
+  if (role === "center" && slide.expandBtn) {
+    card.appendChild(slide.expandBtn.cloneNode(true));
   }
 
   const body = document.createElement("div");
@@ -75,13 +71,8 @@ function setCardRole(card, slide, role) {
   card.classList.add(role === "center" ? "card--center" : "card--side");
 
   const existingExpand = card.querySelector(".expand-btn");
-  if (role === "center" && !existingExpand) {
-    const expandBtn = document.createElement("button");
-    expandBtn.className = "expand-btn";
-    expandBtn.type = "button";
-    expandBtn.setAttribute("aria-label", "Expand");
-    expandBtn.innerHTML = '<img src="assets/arrow-icon.svg" alt="" />';
-    card.appendChild(expandBtn);
+  if (role === "center" && !existingExpand && slide.expandBtn) {
+    card.appendChild(slide.expandBtn.cloneNode(true));
   } else if (role !== "center" && existingExpand) {
     existingExpand.remove();
   }

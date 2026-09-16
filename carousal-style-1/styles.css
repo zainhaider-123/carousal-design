@@ -225,6 +225,7 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .expand-btn img {
@@ -246,7 +247,7 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 3;
+  z-index: 10;
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
