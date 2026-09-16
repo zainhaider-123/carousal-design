@@ -23,7 +23,6 @@ body {
 .who-we-serve {
   position: relative;
   overflow: hidden;
-  padding: clamp(48px, 8vw, 96px) 24px clamp(64px, 8vw, 110px);
 }
 
 .deco {
@@ -48,10 +47,20 @@ body {
 .section-inner {
   position: relative;
   z-index: 1;
-  max-width: 1180px;
+  max-width: 1440px;
   margin: 0 auto;
   text-align: center;
+  padding-inline: 20px;
 }
+
+.nav-btn--prev {
+  margin-right: -26px;
+}
+
+.nav-btn--next {
+  margin-left: -26px;
+}
+
 
 .eyebrow {
   display: inline-flex;
@@ -93,7 +102,7 @@ body {
 .carousel__viewport {
   flex: 1 1 auto;
   min-width: 0;
-  overflow-x: hidden;
+  overflow-x: visible;
   overflow-y: visible;
   padding: 6px 0;
 }
@@ -103,8 +112,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(14px, 2.2vw, 30px);
+  gap: 20px;
   width: 100%;
+  overflow: hidden;
 }
 
 .card {
@@ -131,13 +141,13 @@ body {
 }
 
 .card--side {
-  width: clamp(160px, 21vw, 396px);
+  width: calc(30% - 20px);
   aspect-ratio: 395.52 / 577.88;
   opacity: 0.96;
 }
 
 .card--center {
-  width: clamp(230px, 29vw, 555px);
+  width: 40%;
   aspect-ratio: 554.97 / 720.36;
   z-index: 2;
 }
@@ -236,7 +246,6 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin: 0 clamp(-14px, -1.4vw, -8px);
   z-index: 3;
   transition: background 0.2s ease, transform 0.2s ease;
 }
@@ -331,16 +340,8 @@ body {
 /* Tablet: everything already scales via clamp()/vw, just tighten the
    gutters a bit so three cards keep breathing room. */
 @media (max-width: 1023px) {
-  .section-inner {
-    max-width: 92vw;
-  }
-
   .carousel__track {
     gap: clamp(10px, 1.8vw, 20px);
-  }
-
-  .nav-btn {
-    margin: 0 clamp(-10px, -1vw, -6px);
   }
 }
 
@@ -350,8 +351,9 @@ body {
    keeps every card's geometry real (needed for the slide-transition math;
    display:none would zero it out and break the animation). */
 @media (max-width: 700px) {
-  .who-we-serve {
-    padding: clamp(40px, 12vw, 64px) 16px clamp(48px, 12vw, 72px);
+
+  .carousel__viewport {
+    overflow-x: hidden;
   }
 
   .deco--top-right,
@@ -369,10 +371,6 @@ body {
 
   .card--center {
     width: clamp(210px, 62vw, 420px);
-  }
-
-  .nav-btn {
-    margin: 0 -4px;
   }
 
   .cta {
