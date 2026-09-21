@@ -16,7 +16,6 @@
 
 body {
   margin: 0;
-  background-color: red;
 }
 
 .testimonials {
@@ -130,6 +129,17 @@ body {
    opaque background. */
 .swiper-slide:not(.swiper-slide-active) .t-card {
   background: rgba(255, 255, 255, 0.3);
+}
+
+/* creativeEffect only gives custom positions to the active/prev/next
+   slides — everything further out (next-next, prev-prev, ...) is left
+   stacked directly behind "next" at full opacity, only hidden by
+   z-index luck. Hide those explicitly instead of relying on that. */
+.t-swiper .swiper-slide:not(.swiper-slide-active):not(.swiper-slide-prev):not(.swiper-slide-next) {
+  /* creativeEffect sets an inline opacity:1 on every slide, which beats
+     a plain stylesheet rule — !important is required to override it. */
+  opacity: 0 !important;
+  pointer-events: none;
 }
 
 .t-card__quote {
@@ -266,7 +276,7 @@ body {
    layout once the flanking nav buttons no longer fit beside the
    card and there's no room left to peek prev/next). */
 
-@media (max-width: 1035px) {
+@media (max-width: 1036px) {
   .testimonials__row {
     gap: clamp(10px, 2.5vw, 28px);
   }
@@ -297,7 +307,7 @@ body {
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .testimonials {
     padding-top: clamp(48px, 9vw, 80px);
   }
@@ -316,7 +326,7 @@ body {
   }
 }
 
-@media (max-width: 519px) {
+@media (max-width: 520px) {
   .testimonials__stage {
     padding-inline: 16px;
   }
