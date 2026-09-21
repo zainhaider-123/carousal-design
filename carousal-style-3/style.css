@@ -16,9 +16,6 @@
 
 body {
   margin: 0;
-  background: var(--color-bg);
-  font-family: var(--font-body);
-  color: var(--color-text);
 }
 
 .testimonials {
@@ -29,13 +26,23 @@ body {
 .testimonials__stage {
   max-width: 1440px;
   margin: 0 auto;
+  padding-inline: clamp(16px, 4vw, 60px);
 }
 
 .testimonials__row {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: "prev card next";
   align-items: center;
-  justify-content: space-between;
-  gap: clamp(16px, 3.5vw, 48px);
+  gap: clamp(12px, 3.5vw, 48px);
+}
+
+.t-nav--prev {
+  grid-area: prev;
+}
+
+.t-nav--next {
+  grid-area: next;
 }
 
 /* ---------- Decorative stacked layers behind the card ----------
@@ -45,10 +52,12 @@ body {
    edges, never above or below it. */
 
 .testimonials__card-wrap {
+  grid-area: card;
   position: relative;
-  flex: 1 1 auto;
   min-width: 0;
   max-width: 1024px;
+  justify-self: center;
+  width: 100%;
 }
 
 .testimonials__decor {
@@ -210,7 +219,7 @@ body {
   font-weight: 500;
   font-size: 15px;
   letter-spacing: -0.02em;
-  color: rgba(117, 69, 49, 0.65);
+  color: #ffffff;
 }
 
 .t-nav:hover img {
@@ -252,19 +261,129 @@ body {
   opacity: 1;
 }
 
-/* ---------- Responsive ---------- */
+/* ---------- Responsive ----------
+   Breakpoints: 1440 (desktop) / 1036 (laptop) / 768 (tablet) /
+   520 (large phone) / 0 (small phone). Fluid clamp() sizing already
+   covers the space between these — the queries below only change
+   *structure* (gutters, decor peek, and the stacked layout once the
+   flanking nav buttons no longer fit beside the card). */
 
-@media (max-width: 640px) {
+@media (max-width: 1439px) {
+  .testimonials__decor--left {
+    transform: translate(calc(-50% - 10%), -50%);
+  }
+
+  .testimonials__decor--right {
+    transform: translate(calc(-50% + 10%), -50%);
+  }
+}
+
+@media (max-width: 1035px) {
   .testimonials__row {
-    gap: 10px;
+    gap: clamp(10px, 2.5vw, 28px);
+  }
+
+  .t-nav img {
+    width: clamp(38px, 4.5vw, 50px);
+    height: clamp(38px, 4.5vw, 50px);
+  }
+
+  .t-card {
+    /* Below ~1035px the card's own width shrinks faster than its
+       Figma aspect-ratio (~1.9:1) can hold the quote text — nav
+       buttons + gutters + gaps eat into the available width, and
+       .t-card__inner's overflow:hidden was clipping content top and
+       bottom. Use an explicit, still-fixed height instead so it stays
+       tall enough at every width in this range without reintroducing
+       per-slide height changes. */
+    aspect-ratio: auto;
+    height: clamp(380px, 45vw, 540px);
+  }
+
+  /* The base clamp(70px, 8vw, 110px) floors out at 70px around
+     ~875px wide and stops shrinking any further — keep it scaling
+     down through the smaller tiers instead of staying pinned there. */
+  .t-card__badge {
+    width: clamp(60px, 7vw, 82px);
+    height: clamp(60px, 7vw, 82px);
+  }
+}
+
+@media (max-width: 767px) {
+  .testimonials {
+    padding-top: clamp(48px, 9vw, 80px);
+  }
+
+  .testimonials__decor--left {
+    transform: translate(calc(-50% - 8%), -50%);
+  }
+
+  .testimonials__decor--right {
+    transform: translate(calc(-50% + 8%), -50%);
   }
 
   .t-nav span {
     display: none;
   }
 
+  .t-card__quote {
+    letter-spacing: -0.02em;
+  }
+
+  .t-card__badge {
+    width: clamp(48px, 7vw, 60px);
+    height: clamp(48px, 7vw, 60px);
+  }
+}
+
+@media (max-width: 519px) {
+  .testimonials__stage {
+    padding-inline: 16px;
+  }
+
+  .testimonials__row {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "card card"
+      "prev next";
+    row-gap: 20px;
+    column-gap: 16px;
+  }
+
+  .testimonials__card-wrap {
+    max-width: 100%;
+  }
+
+  .t-nav--prev {
+    justify-self: end;
+  }
+
+  .t-nav--next {
+    justify-self: start;
+  }
+
+  .testimonials__decor {
+    display: none;
+  }
+
   .t-card {
-    padding-inline: 20px;
+    /* Narrower still than the 1035px tier's floor can hold: the quote
+       wraps to more lines here, so it needs a taller minimum before
+       the author block below it gets clipped. */
+    height: clamp(460px, 105vw, 540px);
+  }
+
+  .t-card__badge {
+    width: clamp(40px, 10vw, 50px);
+    height: clamp(40px, 10vw, 50px);
+  }
+
+  .t-card__inner {
+    padding: 44px 20px 28px;
+  }
+
+  .t-card__quote {
+    font-size: 16px;
   }
 
   .t-card__author {
