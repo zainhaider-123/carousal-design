@@ -16,6 +16,7 @@
 
 body {
   margin: 0;
+  background-color: red;
 }
 
 .testimonials {
@@ -26,7 +27,6 @@ body {
 .testimonials__stage {
   max-width: 1440px;
   margin: 0 auto;
-  padding-inline: clamp(16px, 4vw, 60px);
 }
 
 .testimonials__row {
@@ -45,12 +45,6 @@ body {
   grid-area: next;
 }
 
-/* ---------- Decorative stacked layers behind the card ----------
-   Figma: two rectangles the same aspect ratio as the card, scaled to
-   ~88% of it, vertically centered on the card and nudged ~5% of the
-   card's width to each side — just enough to peek past its left/right
-   edges, never above or below it. */
-
 .testimonials__card-wrap {
   grid-area: card;
   position: relative;
@@ -60,26 +54,6 @@ body {
   width: 100%;
 }
 
-.testimonials__decor {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 88%;
-  aspect-ratio: 901.182 / 474.208;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 50px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.testimonials__decor--left {
-  transform: translate(calc(-50% - 12.6%), -50%);
-}
-
-.testimonials__decor--right {
-  transform: translate(calc(-50% + 12.6%), -50%);
-}
-
 /* ---------- Swiper ---------- */
 
 .t-swiper {
@@ -87,9 +61,18 @@ body {
   z-index: 1;
   /* Swiper's own CSS sets overflow:hidden on this element by default,
      which would clip the quote badge poking out above the card's top
-     edge. Safe to disable here: with effect:'fade' slides are stacked
-     in place (no horizontal translation), so nothing relies on this
-     element clipping its contents. */
+     edge. Safe to disable here since nothing relies on the container
+     itself clipping slide content (see .swiper-slide override below
+     for the effect:'cards' case). */
+  overflow: visible;
+}
+
+.t-swiper .swiper-slide {
+  /* effect:'cards' sets overflow:hidden on each slide (to mask the
+     stacked cards behind it), which also clips the badge poking out
+     above this slide's own card. Each slide is exactly one card with
+     nothing else layered behind it within the slide itself, so this
+     is safe to open back up. */
   overflow: visible;
 }
 
@@ -133,6 +116,20 @@ body {
 .t-card__badge img {
   width: 100%;
   height: 100%;
+}
+
+/* Only the active (top) card shows the quote badge — the real prev/next
+   slides now peek out behind it (see creativeEffect in main.js), and
+   their own badges would otherwise show through too. */
+.swiper-slide:not(.swiper-slide-active) .t-card__badge {
+  display: none;
+}
+
+/* Peeking prev/next cards use the same translucent white the old
+   decorative placeholder rectangles used, instead of the active card's
+   opaque background. */
+.swiper-slide:not(.swiper-slide-active) .t-card {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .t-card__quote {
@@ -265,18 +262,9 @@ body {
    Breakpoints: 1440 (desktop) / 1036 (laptop) / 768 (tablet) /
    520 (large phone) / 0 (small phone). Fluid clamp() sizing already
    covers the space between these — the queries below only change
-   *structure* (gutters, decor peek, and the stacked layout once the
-   flanking nav buttons no longer fit beside the card). */
-
-@media (max-width: 1439px) {
-  .testimonials__decor--left {
-    transform: translate(calc(-50% - 10%), -50%);
-  }
-
-  .testimonials__decor--right {
-    transform: translate(calc(-50% + 10%), -50%);
-  }
-}
+   *structure* (gutters, badge size, and the stacked single-card
+   layout once the flanking nav buttons no longer fit beside the
+   card and there's no room left to peek prev/next). */
 
 @media (max-width: 1035px) {
   .testimonials__row {
@@ -312,14 +300,6 @@ body {
 @media (max-width: 767px) {
   .testimonials {
     padding-top: clamp(48px, 9vw, 80px);
-  }
-
-  .testimonials__decor--left {
-    transform: translate(calc(-50% - 8%), -50%);
-  }
-
-  .testimonials__decor--right {
-    transform: translate(calc(-50% + 8%), -50%);
   }
 
   .t-nav span {
@@ -362,7 +342,9 @@ body {
     justify-self: start;
   }
 
-  .testimonials__decor {
+  /* No room to peek prev/next cards beside a full-width card at this
+     size — same call the old decor rectangles made here. */
+  .swiper-slide:not(.swiper-slide-active) {
     display: none;
   }
 
