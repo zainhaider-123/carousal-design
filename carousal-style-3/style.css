@@ -22,25 +22,41 @@ body {
 }
 
 .testimonials {
-  padding: clamp(64px, 10vw, 140px) 24px clamp(56px, 8vw, 96px);
+  padding: clamp(64px, 10vw, 140px) 0 0 0;
   overflow: hidden;
 }
 
 .testimonials__stage {
-  position: relative;
-  max-width: 1180px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 clamp(56px, 9vw, 130px);
 }
 
-/* ---------- Decorative stacked layers behind the card ---------- */
+.testimonials__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(16px, 3.5vw, 48px);
+}
+
+/* ---------- Decorative stacked layers behind the card ----------
+   Figma: two rectangles the same aspect ratio as the card, scaled to
+   ~88% of it, vertically centered on the card and nudged ~5% of the
+   card's width to each side — just enough to peek past its left/right
+   edges, never above or below it. */
+
+.testimonials__card-wrap {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 1024px;
+}
 
 .testimonials__decor {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: min(88%, 940px);
-  aspect-ratio: 901 / 474;
+  width: 88%;
+  aspect-ratio: 901.182 / 474.208;
   background: rgba(255, 255, 255, 0.3);
   border-radius: 50px;
   pointer-events: none;
@@ -48,11 +64,11 @@ body {
 }
 
 .testimonials__decor--left {
-  transform: translate(-56%, -46%);
+  transform: translate(calc(-50% - 12.6%), -50%);
 }
 
 .testimonials__decor--right {
-  transform: translate(-44%, -46%);
+  transform: translate(calc(-50% + 12.6%), -50%);
 }
 
 /* ---------- Swiper ---------- */
@@ -60,15 +76,35 @@ body {
 .t-swiper {
   position: relative;
   z-index: 1;
+  /* Swiper's own CSS sets overflow:hidden on this element by default,
+     which would clip the quote badge poking out above the card's top
+     edge. Safe to disable here: with effect:'fade' slides are stacked
+     in place (no horizontal translation), so nothing relies on this
+     element clipping its contents. */
+  overflow: visible;
 }
 
 .t-card {
   position: relative;
   background: var(--color-card-bg);
   border-radius: 50px;
-  box-shadow: 30px 34px 164px 0px rgba(117, 69, 49, 0.2);
-  padding: clamp(56px, 7vw, 76px) clamp(28px, 6vw, 90px) clamp(36px, 5vw, 56px);
   text-align: center;
+  /* Fixed to the card's Figma proportions so every slide renders at the
+     same height regardless of quote length, instead of resizing the
+     whole carousel on every transition. */
+  aspect-ratio: 1023.607 / 538.629;
+}
+
+.t-card__inner {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  padding: clamp(56px, 7vw, 76px) clamp(28px, 6vw, 90px) clamp(36px, 5vw, 56px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .t-card__badge {
@@ -91,6 +127,7 @@ body {
 }
 
 .t-card__quote {
+  width: 100%;
   margin: 0 auto;
   max-width: 753px;
   font-family: var(--font-body);
@@ -148,12 +185,10 @@ body {
 /* ---------- Nav buttons ---------- */
 
 .t-nav {
-  position: absolute;
-  top: 44%;
-  transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-shrink: 0;
   gap: 12px;
   background: none;
   border: none;
@@ -182,14 +217,6 @@ body {
   transform: scale(1.08);
 }
 
-.t-nav--prev {
-  left: 0;
-}
-
-.t-nav--next {
-  right: 0;
-}
-
 .t-nav.swiper-button-disabled {
   opacity: 0.4;
   cursor: default;
@@ -207,7 +234,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 4px;
 }
 
 .t-pagination .swiper-pagination-bullet {
@@ -216,7 +243,7 @@ body {
   border-radius: 2px;
   background: var(--color-taupe);
   opacity: 0.3;
-  margin: 0;
+  margin: 0 !important;
   transition: background 0.2s ease, opacity 0.2s ease;
 }
 
@@ -228,17 +255,16 @@ body {
 /* ---------- Responsive ---------- */
 
 @media (max-width: 640px) {
-  .testimonials__stage {
-    padding: 0 8px;
+  .testimonials__row {
+    gap: 10px;
   }
 
-  .t-nav {
-    position: static;
-    transform: none;
+  .t-nav span {
+    display: none;
   }
 
   .t-card {
-    padding-inline: 24px;
+    padding-inline: 20px;
   }
 
   .t-card__author {
@@ -248,10 +274,5 @@ body {
 
   .t-card__author-info {
     text-align: center;
-  }
-
-  .t-nav {
-    display: inline-flex;
-    margin: 20px 12px 0;
   }
 }

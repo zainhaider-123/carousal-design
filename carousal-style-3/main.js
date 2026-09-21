@@ -4,7 +4,6 @@ const swiper = new Swiper(".t-swiper", {
   fadeEffect: { crossFade: true },
   speed: 550,
   grabCursor: true,
-  autoHeight: true,
   pagination: {
     el: ".t-pagination",
     clickable: true,
