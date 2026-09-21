@@ -23,9 +23,10 @@ body {
   overflow: hidden;
 }
 
-.testimonials__stage {
+.container {
   max-width: 1440px;
   margin: 0 auto;
+  padding-inline: 20px;
 }
 
 .testimonials__row {
@@ -213,15 +214,30 @@ body {
   z-index: 2;
 }
 
-.t-nav img {
+.t-nav__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: clamp(42px, 5vw, 58px);
   height: clamp(42px, 5vw, 58px);
   border-radius: 50%;
+  background: var(--color-card-bg);
+  color: var(--color-text);
   box-shadow: 0 10px 30px rgba(117, 69, 49, 0.18);
-  transition: transform 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.t-nav span {
+.t-nav__icon svg {
+  /* Figma's arrow is 21x12 (not square) — set only width and let
+     height follow the SVG's own intrinsic ratio, instead of forcing
+     it into a square box like the old icon and squashing it. */
+  width: 42%;
+  height: auto;
+  display: block;
+}
+
+.t-nav__label {
   font-family: var(--font-body);
   font-weight: 500;
   font-size: 15px;
@@ -229,8 +245,15 @@ body {
   color: #ffffff;
 }
 
-.t-nav:hover img {
+.t-nav:hover .t-nav__icon {
+  background: var(--color-orange);
+  color: #ffffff;
   transform: scale(1.08);
+  box-shadow: 0 14px 34px rgba(210, 118, 34, 0.35);
+}
+
+.t-nav:active .t-nav__icon {
+  transform: scale(0.96);
 }
 
 .t-nav.swiper-button-disabled {
@@ -238,8 +261,11 @@ body {
   cursor: default;
 }
 
-.t-nav.swiper-button-disabled img {
+.t-nav.swiper-button-disabled:hover .t-nav__icon {
+  background: var(--color-card-bg);
+  color: var(--color-text);
   transform: none;
+  box-shadow: 0 10px 30px rgba(117, 69, 49, 0.18);
 }
 
 /* ---------- Pagination ---------- */
@@ -281,7 +307,7 @@ body {
     gap: clamp(10px, 2.5vw, 28px);
   }
 
-  .t-nav img {
+  .t-nav__icon {
     width: clamp(38px, 4.5vw, 50px);
     height: clamp(38px, 4.5vw, 50px);
   }
@@ -312,8 +338,8 @@ body {
     padding-top: clamp(48px, 9vw, 80px);
   }
 
-  .t-nav span {
-    display: none;
+  .t-nav {
+    gap: 8px;
   }
 
   .t-card__quote {
@@ -327,10 +353,6 @@ body {
 }
 
 @media (max-width: 520px) {
-  .testimonials__stage {
-    padding-inline: 16px;
-  }
-
   .testimonials__row {
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
@@ -353,9 +375,15 @@ body {
   }
 
   /* No room to peek prev/next cards beside a full-width card at this
-     size — same call the old decor rectangles made here. */
+     size — same call the old decor rectangles made here. Using
+     opacity (not display:none): Swiper measures slide layout size at
+     init/update time, and display:none slides report zero size, which
+     was corrupting its active-index math and breaking navigation
+     below this width entirely. !important beats creativeEffect's own
+     inline opacity:1 on each slide. */
   .swiper-slide:not(.swiper-slide-active) {
-    display: none;
+    opacity: 0 !important;
+    pointer-events: none;
   }
 
   .t-card {
