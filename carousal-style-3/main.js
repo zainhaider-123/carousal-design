@@ -67,7 +67,10 @@ const swiper = new Swiper(".t-swiper", {
   a11y: { enabled: true },
   on: {
     init(sw) {
-      setActiveBullet(0);
+      // Derive from sw.activeIndex rather than assuming initialSlide's
+      // value always lands exactly where configured — it silently
+      // didn't at narrow viewports before the display:none fix below.
+      setActiveBullet(((sw.activeIndex - 1) % slideCount + slideCount) % slideCount);
     },
     slideChangeTransitionEnd(sw) {
       // Calling slideTo() synchronously from inside this same event
